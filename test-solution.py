@@ -25,7 +25,6 @@ def compile_solution():
 
 
 def judge_solution():
-    print("------------- TEST ------------")
     directory = os.listdir(".")
     inputs = []
     for file in directory:
@@ -94,7 +93,6 @@ def verify_test_result(number):
 
 def print_verdict(verdict, message, worst_time):
     table = PrettyTable(['Problem', 'Lang', 'Verdict', 'Time'])
-    verdict_cell = ""
     if verdict == 1:
         verdict_cell = f'{GREEN} {message} {END_COLOR}'
     else:
