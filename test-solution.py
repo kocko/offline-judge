@@ -97,7 +97,10 @@ def print_verdict(verdict, message, worst_time):
         verdict_cell = f'{GREEN} {message} {END_COLOR}'
     else:
         verdict_cell = f'{RED} {message} {END_COLOR}'
-    table.add_row(['A', 'Java 8', verdict_cell, f'{worst_time} ms'])
+    work_directory = os.getcwd()
+    split = work_directory.split('\\')
+    problem_short_name = split[len(split) - 1]
+    table.add_row([problem_short_name, 'Java 8', verdict_cell, f'{worst_time} ms'])
     print(table)
 
 
