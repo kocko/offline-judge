@@ -8,8 +8,8 @@ ORANGE = '\033[93m'
 END_COLOR = '\033[0m'
 
 
-def parse_contest(contest_id):
-    url = codeforces_url + contest_id
+def parse_contest(tp, contest_id):
+    url = codeforces_url % (tp, contest_id)
     create_folder(os.getcwd() + "/" + contest_id)
     response = requests.get(url)
 
@@ -42,15 +42,15 @@ def create_folder(path):
 
 def create_solution_file(problem_id):
     directory = os.getcwd() + "/" + problem_id
-    filename = "Solution.java"
-    with open("../solution.tmpl") as template:
+    filename = "Main.java"
+    with open("../main.tmpl") as template:
         with open(f'{directory}/{filename}', "w+") as solution_file:
             for line in template:
                 solution_file.write(line)
 
 
 def parse_problem(problem_id):
-    url = f'{codeforces_url}{contest}/problem/{problem_id}'
+    url = problem_url % (type, contest, problem_id)
     response = requests.get(url)
 
     soup = BeautifulSoup(response.text, "html.parser")
@@ -93,6 +93,8 @@ def parse_problem(problem_id):
         count = count + 1
 
 
-codeforces_url = "https://codeforces.com/contest/"
-contest = sys.argv[1]
-parse_contest(contest)
+codeforces_url = 'https://codeforces.com/%s/%s'
+problem_url = 'https://codeforces.com/%s/%s/problem/%s'
+type = sys.argv[1]
+contest = sys.argv[2]
+parse_contest(type, contest)

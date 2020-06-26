@@ -21,7 +21,7 @@ def clear_previous_executions():
 
 
 def compile_solution():
-    subprocess.check_call(['javac', 'Solution.java'])
+    subprocess.check_call(['javac', 'Main.java'])
 
 
 def judge_solution():
@@ -61,7 +61,7 @@ def execute_test(number):
     input_stream = open(f'{number}.in', "r", encoding="utf-8")
     output_stream = open(f'{number}.mine', "w", encoding="utf-8")
     start_time = int(round(time.time() * 1000))
-    process = subprocess.Popen(['java', 'Solution'], stdin=input_stream, stdout=output_stream, stderr=output_stream)
+    process = subprocess.Popen(['java', 'Main'], stdin=input_stream, stdout=output_stream, stderr=output_stream)
     exit_code = process.wait()
     end_time = int(round(time.time() * 1000))
     output_stream.flush()
