@@ -37,23 +37,26 @@ def judge_solution():
     for file in inputs:
         base = os.path.basename(file)
         number = os.path.splitext(base)[0]
-        test_time = execute_test(number)
-        verdict &= verify_test_result(number)
-        if test_time > worst_time:
-            worst_time = test_time
+        test_result = execute_test(number)
+        exit_code = test_result[0]
+        test_time = test_result[1]
+        if exit_code == 0:
+            verdict = verify_test_result(number)
+            if verdict == 1 and test_time > worst_time:
+                worst_time = test_time
+        else:
+            verdict = 2
         if verdict == 0:
             message = f'Wrong answer on test #{number}'
             break
+        elif verdict == 2:
+            message = f'Runtime error on test #{number}'
+            break
 
-    sys.stdout.write(CURSOR_UP_ONE)
-    sys.stdout.write(ERASE_LINE)
     print_verdict(verdict, message, worst_time)
 
 
 def execute_test(number):
-    sys.stdout.write(CURSOR_UP_ONE)
-    sys.stdout.write(ERASE_LINE)
-
     print(f'Running on test #{number}')
 
     sys.stdout.flush()
@@ -66,7 +69,10 @@ def execute_test(number):
     output_stream.flush()
     output_stream.close()
 
-    return end_time - start_time
+    sys.stdout.write(CURSOR_UP_ONE)
+    sys.stdout.write(ERASE_LINE)
+
+    return exit_code, end_time - start_time
 
 
 def verify_test_result(number):
@@ -83,12 +89,7 @@ def verify_test_result(number):
             if len(temp) > 0:
                 result.append(temp)
 
-    if len(result) != 2:
-        return 0
-    elif result[0] == result[1]:
-        return 1
-    else:
-        return 0
+    return len(result) == 2 and result[0] == result[1]
 
 
 def print_verdict(verdict, message, worst_time):
