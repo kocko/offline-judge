@@ -1,15 +1,15 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-JUDGE_HOME=
+JUDGE_HOME=/mnt/d/dev/offline-judge
 ARGS=$@
 
 if [[ $1 = 'parse' ]]
 then
-  python parse-contest.py $2 $3
+  python3 $JUDGE_HOME/parse-contest.py $2 $3
 elif [[ $1 = 'test' ]]
 then
-  python ../../test-solution.py
+  python3 $JUDGE_HOME/test-solution.py
 elif [[ $1 = 'add-test' ]]
 then
-  python ../../add-test.py
+  python3 $JUDGE_HOME/add-test.py
 fi
